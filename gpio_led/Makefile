@@ -49,8 +49,7 @@ SRC+=./main.c
 #======================================================================#
 
 #STM32 startup file
-#STARTUP=./startup_stm32f745xx.s
-STARTUP=./startup.s
+STARTUP=./startup_stm32f745xx.s
 
 #======================================================================#
 
@@ -59,7 +58,7 @@ STARTUP=./startup.s
 OBJECTS=$(SRC:.c=.o)
 OBJECTS+=$(STARTUP:.s=.o)
 
-all:$(BIN_IMAGE) hack tags
+all:$(BIN_IMAGE) tags
 
 #Convert elf file to binary file
 $(BIN_IMAGE):$(EXECUTABLE)
@@ -76,9 +75,6 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo 'Building object $@'
-
-hack:
-	sed -e 's/cortex-m7/cortex-m4/' < startup_stm32f745xx.s > startup.s
 
 #Generate object file from *.s
 %.o: %.s
